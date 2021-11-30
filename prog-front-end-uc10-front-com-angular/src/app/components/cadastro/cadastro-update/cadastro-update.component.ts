@@ -1,4 +1,8 @@
+import { Route } from '@angular/compiler/src/core';
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
+import { Cadastro } from '../cadastro.model';
+import { CadastroService } from '../cadastro.service';
 
 @Component({
   selector: 'app-cadastro-update',
@@ -6,10 +10,23 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./cadastro-update.component.css']
 })
 export class CadastroUpdateComponent implements OnInit {
+  cadastro!: Cadastro;
 
-  constructor() {}
+  constructor(private cadastroService: CadastroService,
+    private router: Router,
+    private route: ActivatedRoute) {}
 
   ngOnInit(): void {
+    const id = +Number(this.route.snapshot.paramMap.get('id'))
+    this.cadastroService.readById(id).subscribe(cadastro => {
+      this.cadastro = cadastro
+    });
+  }
+  uptadeCadastro(): void{
+    this.cadastroService.updateCadastro(this.cadastro).subscribe(()=> {
+      this.cadastroService.showMessege('O usuario foi atualizado')
+      this.router.navigate(["/cadastro/tabela"]);
+    });
   }
 
 }
