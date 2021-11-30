@@ -22,11 +22,22 @@ export class CadastroUpdateComponent implements OnInit {
       this.cadastro = cadastro
     });
   }
-  uptadeCadastro(): void{
+  updateCadastro(): void{
     this.cadastroService.updateCadastro(this.cadastro).subscribe(()=> {
       this.cadastroService.showMessege('O usuario foi atualizado')
       this.router.navigate(["/cadastro/tabela"]);
     });
   }
+
+cancelarCadastro(): void{
+this.router.navigate(['/cadastro'])
+
+}
+
+tabelasCadastro(): void{
+  this.router.navigate(['/cadastro/tabela'])
+
+
+}
 
 }
